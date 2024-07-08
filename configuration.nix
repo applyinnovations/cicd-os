@@ -32,12 +32,24 @@ in
     initialPassword = password;
   };
 
+  environment.etc."rebuild-latest-configuration.sh".text = ''
+    #!/bin/sh
+    curl -o /etc/nixos/configuration.nix https://raw.githubusercontent.com/applyinnovations/cicd-os/main/configuration.nix && nixos-rebuild switch
+  '';
+
   environment.systemPackages = with pkgs; [
     pkgs.neovim
     docker
     git
     cicd
+    pkgs.makeWrapper
   ];
+
+  environment.shellInit = ''
+    mkdir -p ~/bin
+    chmod +x /etc/rebuild-latest-configuration.sh
+    ln -sf /etc/rebuild-latest-configuration.sh ~/bin/rebuild-latest-configuration
+  '';
 
   systemd.services.cicd = {
     wantedBy = [ "multi-user.target" ];
