@@ -1,16 +1,6 @@
 { config, pkgs, ... }:
 
-let
-  cicd = pkgs.writeText "cicd.sh" ''
-    #!/bin/sh
-    rm -rf /tmp/cicd
-    git clone --depth 1 --single-branch https://github.com/applyinnovations/cicd.git /tmp/cicd
-    cd /tmp/cicd
-    docker compose up
-  '';
-in
 {
-
   imports = [
     ./hardware-configuration.nix
   ];
@@ -35,8 +25,14 @@ in
     description = "Fetch the latest cicd and redeploy"; 
     wantedBy = [ "multi-user.target" ];
     serviceConfig = {
-      ExecStart = "source ${cicd}";
       Restart = "always";
+      script = '' 
+       #!/bin/sh
+        rm -rf /tmp/cicd
+        git clone --depth 1 --single-branch https://github.com/applyinnovations/cicd.git /tmp/cicd
+        cd /tmp/cicd
+        docker compose up
+      '';
     };
     requires = [ "network.target" ];
   };
