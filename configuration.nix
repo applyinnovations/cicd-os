@@ -28,8 +28,7 @@
      #!/bin/sh
       ${pkgs.coreutils}/bin/rm -rf /tmp/cicd
       ${pkgs.git}/bin/git clone --depth 1 --single-branch https://github.com/applyinnovations/cicd.git /tmp/cicd
-      ${pkgs.coreutils}/bin/cd /tmp/cicd
-      ${pkgs.docker}/bin/docker compose up
+      ${pkgs.docker}/bin/docker compose --project-directory /tmp/cicd up
     '';
     serviceConfig = {
       Restart = "always";
