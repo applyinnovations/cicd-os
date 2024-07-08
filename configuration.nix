@@ -27,7 +27,7 @@
     wantedBy = [ "multi-user.target" ];
     script = '' 
       #!/bin/sh
-      while ! ping -c 1 github.com; do
+      while ! ${pkgs.curl}/bin/curl --silent --head https://github.com | grep "200 OK" > /dev/null; do
         echo "Waiting for network..."
         sleep 2
       done
