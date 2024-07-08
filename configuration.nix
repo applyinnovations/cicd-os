@@ -32,7 +32,6 @@
     '';
     serviceConfig = {
       Restart = "always";
-      RestartSec = 60;
     };
     requires = [ "network.target" ];
   };
