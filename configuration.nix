@@ -26,17 +26,19 @@
     description = "Fetch the latest cicd and redeploy"; 
     wantedBy = [ "multi-user.target" ];
     script = '' 
-     #!/bin/sh
+      #!/bin/sh
+      while ! ping -c 1 github.com; do
+        echo "Waiting for network..."
+        sleep 2
+      done
       ${pkgs.coreutils}/bin/rm -rf /tmp/cicd
       ${pkgs.git}/bin/git clone --depth 1 --single-branch https://github.com/applyinnovations/cicd.git /tmp/cicd
       ${pkgs.docker}/bin/docker compose --project-directory /tmp/cicd up
     '';
     serviceConfig = {
       Restart = "always";
-      After = [ "network-online.target" ];
-      Wants = [ "network-online.target" ];
     };
-    requires = [ "network.target" ];
+    requires = [ "network-online.target" ];
   };
 
   networking.firewall.allowedTCPPorts = [ 22 80 443 ];
