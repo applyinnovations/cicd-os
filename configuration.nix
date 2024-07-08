@@ -7,6 +7,7 @@
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  nix.settings.auto-optimise-store = true;
 
   virtualisation.docker.enable = true;
 
