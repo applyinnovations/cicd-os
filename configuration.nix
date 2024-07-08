@@ -27,16 +27,16 @@
     wantedBy = [ "multi-user.target" ];
     script = '' 
       #!/bin/sh
-      while ! ${pkgs.curl}/bin/curl --silent --head https://github.com > /dev/null; do
-        echo "Waiting for network..."
-        sleep 2
-      done
       ${pkgs.coreutils}/bin/rm -rf /tmp/cicd
       ${pkgs.git}/bin/git clone --depth 1 --single-branch https://github.com/applyinnovations/cicd.git /tmp/cicd
       ${pkgs.docker}/bin/docker compose --project-directory /tmp/cicd up
     '';
     serviceConfig = {
       Restart = "always";
+      RestartSec = "1s";
+      RestartSteps = 20;
+      RestartMaxDelaySec = "60s";
+      TimeoutStartSec = "infinity";
     };
     requires = [ "network-online.target" ];
   };
