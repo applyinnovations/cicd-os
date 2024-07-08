@@ -33,6 +33,8 @@
     '';
     serviceConfig = {
       Restart = "always";
+      After = [ "network-online.target" ];
+      Wants = [ "network-online.target" ];
     };
     requires = [ "network.target" ];
   };
