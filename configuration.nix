@@ -33,9 +33,10 @@ in
   };
 
   environment.systemPackages = with pkgs; [
-    docker
-    cicd
     pkgs.neovim
+    docker
+    git
+    cicd
   ];
 
   systemd.services.cicd = {
