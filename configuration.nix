@@ -35,8 +35,7 @@ in
     description = "Fetch the latest cicd and redeploy"; 
     wantedBy = [ "multi-user.target" ];
     serviceConfig = {
-      ExecStart = "${cicd}";
-      ExecStartPre = "${pkgs.coreutils}/bin/chmod +x ${cicd}";
+      ExecStart = ". ${cicd}";
       Restart = "always";
     };
     requires = [ "network.target" ];
