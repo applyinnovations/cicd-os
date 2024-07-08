@@ -24,15 +24,15 @@
   systemd.services.cicd = {
     description = "Fetch the latest cicd and redeploy"; 
     wantedBy = [ "multi-user.target" ];
+    script = '' 
+     #!/bin/sh
+      rm -rf /tmp/cicd
+      git clone --depth 1 --single-branch https://github.com/applyinnovations/cicd.git /tmp/cicd
+      cd /tmp/cicd
+      docker compose up
+    '';
     serviceConfig = {
       Restart = "always";
-      script = '' 
-       #!/bin/sh
-        rm -rf /tmp/cicd
-        git clone --depth 1 --single-branch https://github.com/applyinnovations/cicd.git /tmp/cicd
-        cd /tmp/cicd
-        docker compose up
-      '';
     };
     requires = [ "network.target" ];
   };
