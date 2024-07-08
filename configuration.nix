@@ -39,9 +39,8 @@ in
     description = "Fetch the latest cicd and redeploy"; 
     wantedBy = [ "multi-user.target" ];
     serviceConfig = {
-      Type = "oneshot";
       ExecStart = "${initCicd}";
-      Restart = "on-failure";
+      Restart = "always";
     };
     requires = [ "network.target" ];
   };
