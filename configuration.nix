@@ -14,20 +14,28 @@ let
 
     vendorHash = null;
   };
+
+  adminPassword = builtins.getEnv "ADMIN_PASSWORD";
+
+  password = if adminPassword == "" then
+    throw "Environment variable ADMIN_PASSWORD is required and cannot be empty."
+  else
+    adminPassword;
 in
 {
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  users.users.test = {
+  users.users.admin = {
     isNormalUser = true;
     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
-    initialPassword = "test";
+    initialPassword = password;
   };
 
   environment.systemPackages = with pkgs; [
     docker
     cicd
+    pkgs.neovim
   ];
 
   systemd.services.cicd = {
