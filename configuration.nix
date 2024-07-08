@@ -32,10 +32,12 @@
       ${pkgs.docker}/bin/docker compose --project-directory /tmp/cicd up
     '';
     serviceConfig = {
+      StartLimitBurst = 6;
+      StartLimitIntervalSec = 30;
       Restart = "always";
-      RestartSec = "1s";
-      RestartSteps = 20;
-      RestartMaxDelaySec = "60s";
+      RestartSec = 5;
+      RestartSteps = 10;
+      RestartMaxDelaySec = 60;
       TimeoutStartSec = "infinity";
     };
     requires = [ "network-online.target" ];
