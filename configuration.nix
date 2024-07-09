@@ -18,7 +18,7 @@
   };
 
   services.openssh.enable = true;
-  services.openssh.passwordAuthentication = true;
+  services.openssh.settings.PasswordAuthentication = true;
 
   environment.systemPackages = with pkgs; [
     docker
