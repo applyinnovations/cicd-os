@@ -17,6 +17,9 @@
     initialPassword = "admin";
   };
 
+  services.openssh.enable = true;
+  services.openssh.passwordAuthentication = true;
+
   environment.systemPackages = with pkgs; [
     docker
     git
