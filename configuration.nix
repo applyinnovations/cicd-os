@@ -32,7 +32,7 @@
       #!/bin/sh
       ${pkgs.coreutils}/bin/rm -rf /tmp/cicd
       ${pkgs.git}/bin/git clone --single-branch https://github.com/applyinnovations/cicd.git /tmp/cicd
-      ${pkgs.docker}/bin/docker compose --project-directory /tmp/cicd up
+      ${pkgs.docker}/bin/docker compose --project-directory /tmp/cicd up --build
     '';
     serviceConfig = {
       StartLimitBurst = 6;
