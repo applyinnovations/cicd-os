@@ -5,6 +5,10 @@
     ./hardware-configuration.nix
   ];
 
+  system.autoUpgrade.enable = true;
+  system.autoUpgrade.channel = "https://channels.nixos.org/nixos-24.11";
+  system.autoUpgrade.allowReboot = false;
+
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   nix.settings.auto-optimise-store = true;
