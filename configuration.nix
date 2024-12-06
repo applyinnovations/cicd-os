@@ -5,6 +5,7 @@
     ./hardware-configuration.nix
   ];
 
+  system.stateVersion = "24.11";
   system.autoUpgrade.enable = true;
   system.autoUpgrade.channel = "https://channels.nixos.org/nixos-24.11";
   system.autoUpgrade.allowReboot = false;
@@ -52,5 +53,4 @@
 
   networking.firewall.allowedTCPPorts = [ 22 80 443 ];
 
-  system.stateVersion = "24.05";
 }
